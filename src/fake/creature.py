@@ -6,18 +6,20 @@ from model.creature import Creature
 faker = Faker()
 
 _creatures = [
-    Creature
-    (
+    Creature(
         name=faker.name(),
         aka=faker.name(),
-        area=faker.country(), 
+        area=faker.country(),
         country=faker.country(),
-        description=faker.text(max_nb_chars=160)
-    ) for _ in range(10)
+        description=faker.text(max_nb_chars=160),
+    )
+    for _ in range(10)
 ]
+
 
 def get_all() -> list[Creature]:
     return _creatures
+
 
 def get_one(name: str) -> Creature:
     for _creature in _creatures:
@@ -25,14 +27,19 @@ def get_one(name: str) -> Creature:
             return _creature
     return None
 
+
 def create(creature: Creature) -> Creature:
-    pass
+    _creatures.append(creature)
+    return creature
+
 
 def modify(creature: Creature) -> Creature:
     pass
 
+
 def replace(creature: Creature) -> Creature:
     pass
+
 
 def delete(name: str) -> bool:
     pass
