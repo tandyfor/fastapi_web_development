@@ -1,10 +1,13 @@
 from fastapi import APIRouter
 from model.creature import Creature
-import fake.creature as service
+
+# import fake.creature as service
+from service import creature as service
 
 router = APIRouter(prefix="/creature")
 
 
+@router.get("")
 @router.get("/")
 def get_all() -> list[Creature]:
     return service.get_all()
