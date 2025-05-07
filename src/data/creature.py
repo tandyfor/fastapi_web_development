@@ -17,7 +17,13 @@ def init():
 
 def row_to_model(row: tuple) -> Creature:
     name, description, country, area, aka = row
-    return Creature(name, description, country, area, aka)
+    return Creature(
+        name=name,
+        description=description,
+        country=country,
+        area=area,
+        aka=aka
+    )
 
 
 def model_to_dict(creature: Creature) -> dict:
@@ -49,11 +55,12 @@ def create(creature: Creature):
     try:
         curs.execute(qry, params)
     except IntegrityError:
-        raise Duplicate(msg=f"Explorer {creature.name} already exists")
-    return get_one(creature.name)
+        raise Duplicate(msg=f"Creature {creature.name} already exists")
+    # return get_one(creature.name)
+    return creature
 
 
-def modify(creature: Creature) -> Creature:
+def modify(name: str, creature: Creature) -> Creature:
     qry = """update creature
 set country=:country,
 name=:name,
@@ -62,12 +69,12 @@ area=:area,
 aka=:aka
 where name=:name_orig"""
     params = model_to_dict(creature)
-    params["name_orig"] = creature.name
+    params["name_orig"] = name
     _ = curs.execute(qry, params)
     if curs.rowcount == 1:
         return get_one(creature.name)
     else:
-        raise Missing(msg=f"Creature {create.name} not found")
+        raise Missing(msg=f"Creature {name} not found")
 
 
 def replace(creature: Creature):
