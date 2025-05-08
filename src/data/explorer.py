@@ -55,7 +55,7 @@ def modify(name: str, explorer: Explorer) -> Explorer:
  description=:description
  where name=:name_orig"""
     params = model_to_dict(explorer)
-    params["name_orig"] = explorer.name
+    params["name_orig"] = name
     curs.execute(qry, params)
     if curs.rowcount == 1:
         return get_one(explorer.name)
