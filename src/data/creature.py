@@ -81,9 +81,9 @@ def replace(creature: Creature):
     return creature
 
 
-def delete(creature: Creature):
+def delete(name: str):
     qry = "delete from creature where name = :name"
-    params = {"name": creature.name}
+    params = {"name": name}
     curs.execute(qry, params)
     if curs.rowcount != 1:
-        raise Missing(msg=f"Creature {creature.name} not found")
+        raise Missing(msg=f"Creature {name} not found")
